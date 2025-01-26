@@ -8,9 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/uploads/hero3.jpg');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #39628c, #707070);
             color: white;
             padding: 100px 0;
             margin-bottom: 40px;
@@ -40,6 +38,16 @@
         }
         .like-btn.liked .fa-heart {
             color: red;
+        }
+        .gradient-placeholder {
+            background: linear-gradient(135deg, #39628c, #707070);
+            width: 100%;
+            height: 100%;
+        }
+        .gradient-placeholder i {
+            font-size: 40px;
+            color: white;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -91,10 +99,18 @@
         <div th:each="post : ${posts}" class="col-md-6 col-lg-4">
             <div class="card h-100 shadow-sm">
                 <div class="position-relative">
-                    <img th:src="${post.photoUrl != null ? post.photoUrl : '/uploads/placeholder.jpg'}"
-                         class="card-img-top"
-                         alt="Post image"
-                         style="height: 200px; object-fit: cover;">
+                    <a th:href="@{/posts/{id}(id=${post.id})}">
+                        <div th:if="${post.photoUrl == null}"
+                             class="card-img-top gradient-placeholder d-flex align-items-center justify-content-center"
+                             style="height: 200px; object-fit: cover;">
+                            <i class="fa-regular fa-image" style="font-size: 40px; color: white; opacity: 0.8;"></i>
+                        </div>
+                        <img th:if="${post.photoUrl != null}"
+                             th:src="${post.photoUrl}"
+                             class="card-img-top"
+                             alt="Post image"
+                             style="height: 200px; object-fit: cover;">
+                    </a>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">
